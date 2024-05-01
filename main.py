@@ -25,3 +25,31 @@ class User:
     def __str__(self):
         # Возвращает форматированную строку с данными пользователя.
         return f"User ID: {self._user_id}, Name: {self._name}, Access Level: {self._access_level}"
+
+    class Admin(User):
+        # Конструктор класса, который также наследует от класса User.
+        def __init__(self, user_id, name):
+            super().__init__(user_id,
+                             name)  # Вызывает конструктор базового класса User для инициализации user_id и name.
+            self._access_level = 'admin'  # Устанавливает уровень доступа специфичный для администраторов.
+            self._user_list = []  # Инициализирует пустой список для хранения объектов пользователей.
+
+        # Метод для добавления нового пользователя в список управляемых пользователей.
+        def add_user(self, user):
+            self._user_list.append(user)
+            print(f"User {user.get_name()} added with ID {user.get_user_id()}.")
+
+            # Метод для удаления пользователя из списка по идентификатору.
+
+        def remove_user(self, user_id):
+            for user in self._user_list:  # Перебирает список пользователей.
+                if user.get_user_id() == user_id:
+                    self._user_list.remove(user)
+                    print(f"User {user.get_name()} removed.")  # Выводит информацию об удалении пользователя.
+                    return  # Прерывает цикл после удаления пользователя.
+            print("User not found.")  # Выводит сообщение, если пользователь с заданным ID не найден.
+
+        # Метод для вывода списка всех пользователей.
+        def list_users(self):
+            for user in self._user_list:  # Перебирает всех пользователей в списке.
+                print(user)  # Выводит информацию о каждом пользователе (вызывается метод __str__ класса User).
