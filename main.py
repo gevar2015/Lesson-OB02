@@ -1,59 +1,46 @@
 class User:
-    # Конструктор класса с инициализацией ID пользователя, имени и уровня доступа.
-    def __init__(self, user_id, name):
+    def __init__(self, user_id, name, access_level='user'):
         self._user_id = user_id
         self._name = name
-        self._access_level = 'user'  # Переменная, устанавливающая начальный уровень доступа как 'user'.
+        self._access_level = access_level
 
-    # Метод для получения ID пользователя.
     def get_user_id(self):
         return self._user_id
 
-    # Метод для получения имени пользователя.
     def get_name(self):
         return self._name
 
-    # Метод для установки нового имени пользователя.
-    def set_name(self, name):
-        self._name = name
-
-    # Метод для получения уровня доступа пользователя.
     def get_access_level(self):
         return self._access_level
 
-    # Метод для представления объекта в виде строки.
     def __str__(self):
-        # Возвращает форматированную строку с данными пользователя.
         return f"User ID: {self._user_id}, Name: {self._name}, Access Level: {self._access_level}"
+class Admin(User):
+    def __init__(self, user_id, name):
+        super().__init__(user_id, name, access_level='admin')
+        self._user_list = []  # Инициализирует пустой список для хранения объектов пользователей
 
-    class Admin(User):
-        # Конструктор класса, который также наследует от класса User.
-        def __init__(self, user_id, name):
-            super().__init__(user_id,
-                             name)  # Вызывает конструктор базового класса User для инициализации user_id и name.
-            self._access_level = 'admin'  # Устанавливает уровень доступа специфичный для администраторов.
-            self._user_list = []  # Инициализирует пустой список для хранения объектов пользователей.
+    def add_user(self, user):
+        """Метод для добавления нового пользователя в список управляемых пользователей."""
+        self._user_list.append(user)
+        print(f"User {user.get_name()} added with ID {user.get_user_id()}.")
 
-        # Метод для добавления нового пользователя в список управляемых пользователей.
-        def add_user(self, user):
-            self._user_list.append(user)
-            print(f"User {user.get_name()} added with ID {user.get_user_id()}.")
+    def remove_user(self, user_id):
+        """Метод для удаления пользователя из списка по идентификатору."""
+        for user in self._user_list:
+            if user.get_user_id() == user_id:
+                self._user_list.remove(user)
+                print(f"User {user.get_name()} removed.")
+                return
+        print("User not found.")
 
-            # Метод для удаления пользователя из списка по идентификатору.
-
-        def remove_user(self, user_id):
-            for user in self._user_list:  # Перебирает список пользователей.
-                if user.get_user_id() == user_id:
-                    self._user_list.remove(user)
-                    print(f"User {user.get_name()} removed.")  # Выводит информацию об удалении пользователя.
-                    return  # Прерывает цикл после удаления пользователя.
-            print("User not found.")  # Выводит сообщение, если пользователь с заданным ID не найден.
-
-        # Метод для вывода списка всех пользователей.
-        def list_users(self):
-            for user in self._user_list:  # Перебирает всех пользователей в списке.
-                print(user)  # Выводит информацию о каждом пользователе (вызывается метод __str__ класса User).
-
+    def list_users(self):
+        """Метод для вывода списка всех пользователей."""
+        if self._user_list:
+            for user in self._user_list:
+                print(user)
+        else:
+            print("No users in list.")
 # Создаем администратора
 admin = Admin('001', 'Alice')
 
