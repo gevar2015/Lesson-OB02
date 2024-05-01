@@ -53,3 +53,23 @@ class User:
         def list_users(self):
             for user in self._user_list:  # Перебирает всех пользователей в списке.
                 print(user)  # Выводит информацию о каждом пользователе (вызывается метод __str__ класса User).
+
+# Создаем администратора
+admin = Admin('001', 'Alice')
+
+# Создаем несколько пользователей
+user1 = User('002', 'Bob')
+user2 = User('003', 'Charlie')
+
+# Админ добавляет пользователей
+admin.add_user(user1)
+admin.add_user(user2)
+
+# Вывод списка пользователей
+admin.list_users()
+
+# Удаление пользователя
+admin.remove_user('002')
+
+# Вывод обновленного списка пользователей
+admin.list_users()
