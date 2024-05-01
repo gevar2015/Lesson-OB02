@@ -29,11 +29,11 @@ class Admin(User):
         self.__user_list = []
 
     def add_user(self, user):
-        """Добавляет пользователя в список."""
+    # Добавляет пользователя в список.
         self.__user_list.append(user)
 
     def remove_user(self, user):
-        """Удаляет пользователя из списка."""
+    # Удаляет пользователя из списка.
         if user in self.__user_list:
             self.__user_list.remove(user)
             print(f"Пользователь {user.get_name()} удален из списка.")
@@ -41,7 +41,7 @@ class Admin(User):
             print("Такого пользователя нет в списке.")
 
     def list_users(self):
-        """Выводит список пользователей."""
+    # Выводит список пользователей.
         print("Список пользователей:")
         for user in self.__user_list:
             print(f"ID: {user.get_user_id()}, Имя: {user.get_name()}, Уровень доступа: {user.get_access_level()}")
